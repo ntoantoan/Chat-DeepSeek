@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1.chat import router as chat_router
+from app.api.routers import router as api_router
 
 app = FastAPI(
     title="Chat DeepSeek API",
@@ -18,17 +18,21 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(chat_router, prefix="/api/v1")
-
-@app.get("/")
-async def root():
-    return {"message": "Welcome to Chat DeepSeek API"}
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
-
+app.include_router(api_router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8002, reload=True) 
+    import os
+    
+    # Get the current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Change to the current directory to ensure proper module imports
+    os.chdir(current_dir)
+    
+    uvicorn.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=8002, 
+        reload_excludes=["../venv/*", "../.venv/*"]  # Adjust venv path relative to backend directory
+    ) 
