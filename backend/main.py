@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.chat import router as chat_router
-from plugins import search_plugin
 
 app = FastAPI(
     title="Chat DeepSeek API",
@@ -29,9 +28,6 @@ async def root():
 async def health_check():
     return {"status": "healthy"}
 
-@app.post("/search")
-async def search(query: str):
-    return search_plugin(query, categories="general", num_results=10)
 
 if __name__ == "__main__":
     import uvicorn

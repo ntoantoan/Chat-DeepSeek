@@ -38,7 +38,7 @@ def search_plugin(query: str,
                 {
                     "result": item.get("content", ""),
                     "url": item.get("url", ""),
-                    "title": item.get("title", "")
+                    "title": item.get("title", ""),
                 }
                 for item in results.get("results", [])
             ]

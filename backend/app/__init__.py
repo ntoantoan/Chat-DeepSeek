@@ -1,3 +1,0 @@
-"""
-Chat DeepSeek Backend Application
-""" 
